@@ -6,8 +6,10 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] GameObject _player;
     [SerializeField] float _playerVisibilityDistance = 200f;
     [SerializeField] float _despawnSafeZone = 20f;
+    [SerializeField] float _mapWidth = 10;
 
-    [SerializeField, Space()] WaterBlock _waterBlock;
+    [SerializeField, Space] WaterBlock _waterBlock;
+    [SerializeField] GameObject[] _startWalls;
 
     [SerializeField, Header("Trampolines")] GameObject _trampolinePrefab;
     [SerializeField] Transform _trampolineParent;
@@ -23,13 +25,19 @@ public class MapGenerator : MonoBehaviour
 
     List<GameObject> _trampolines = new();
     List<WaterBlock> _waterBlocks = new();
+    List<GameObject[]> _walls = new();
     float _lastTrampolineZ = 0;
     float _lastWaterBlockEndZ = 0;
+    float _lastWallZ = 0;
+    float _wallLength = 0;
 
     void Awake()
     {
         _waterBlocks.Add(_waterBlock);
         _lastWaterBlockEndZ = _waterBlock.EndZ;
+        _wallLength = _startWalls[0].transform.localScale.z;
+        _lastWallZ = _startWalls[0].transform.position.z;
+        _walls.Add(new GameObject[2] { _startWalls[0], _startWalls[1] });
 
         UpdateMap();
     }
@@ -38,6 +46,7 @@ public class MapGenerator : MonoBehaviour
     {
         UpdateTrampolines();
         UpdateWater();
+        UpdateWalls();
     }
 
     void UpdateTrampolines()
@@ -86,5 +95,37 @@ public class MapGenerator : MonoBehaviour
         WaterBlock newWaterBlock = Instantiate(_waterBlock, Vector3.zero, Quaternion.identity, _waterBlock.transform.parent);
         _waterBlocks.Add(newWaterBlock);
         return newWaterBlock;
+    }
+
+    public void UpdateWalls()
+    {
+        while (_lastWallZ < LastVisiblePoint)
+        {
+            float wallZ = _lastWallZ + _wallLength;
+            Vector3 wallPos = new(_mapWidth, _startWalls[0].transform.position.y, wallZ);
+            GameObject[] walls = GetFreeWall();
+            GameObject leftWall = walls[0];
+            GameObject rightWall = walls[1];
+            leftWall.name = "LeftWall";
+            rightWall.name = "RightWall";
+            leftWall.transform.position = wallPos;
+            rightWall.transform.position = wallPos + new Vector3(-_mapWidth * 2, 0, 0);
+            _lastWallZ = wallZ;
+        }
+    }
+
+    GameObject[] GetFreeWall()
+    {
+        foreach (var wallPair in _walls)
+        {
+            Debug.Log(wallPair[0].transform.position.z + _wallLength / 2.0f);
+            if (wallPair[0].transform.position.z + _wallLength / 2.0f < _player.transform.position.z - _despawnSafeZone)
+                return wallPair;
+        }
+        GameObject[] newWalls = new GameObject[2];
+        newWalls[0] = Instantiate(_startWalls[0], Vector3.zero, Quaternion.identity, _startWalls[0].transform.parent);
+        newWalls[1] = Instantiate(_startWalls[0], Vector3.zero, Quaternion.identity, _startWalls[0].transform.parent);
+        _walls.Add(newWalls);
+        return newWalls;
     }
 }

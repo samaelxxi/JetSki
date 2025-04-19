@@ -7,6 +7,7 @@ public class BotControls : MonoBehaviour, IJetSkiControls
     [SerializeField] float _verticalCorrectionTime = 5;
     [SerializeField] float _verticalSmoothing = 0.1f;
     [SerializeField] float _horizontalSmoothing = 0.1f;
+    [SerializeField] float _distanceOffset = 0; // some customizing for different bots
     [SerializeField] JetSkiController _player;
     [SerializeField] JetSkiController _bot;
 
@@ -39,6 +40,7 @@ public class BotControls : MonoBehaviour, IJetSkiControls
         float playerVelocity = _player.Velocity;
         float distance = _player.transform.position.z - transform.position.z;
         distance += playerVelocity / 2.0f; // try(hope) to be in front of the player
+        distance += _distanceOffset;
         float targetSpeed = playerVelocity + distance / _verticalCorrectionTime;
         targetSpeed = Mathf.Clamp(targetSpeed, _bot.JetSkiStats.MinSpeed, _bot.JetSkiStats.MaxSpeed);
         float targetVerticalInput = MathExtensions.LinearMap(targetSpeed, _bot.JetSkiStats.MinSpeed, _bot.JetSkiStats.MaxSpeed, -1f, 1f);
@@ -100,9 +102,10 @@ public class BotControls : MonoBehaviour, IJetSkiControls
 
         float playerVelocity = _player.Velocity;
         float distance = _player.transform.position.z - transform.position.z;
-        distance += playerVelocity / 2.0f; // try to be in front of the player
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + Vector3.forward * distance, 0.1f);
+        distance += playerVelocity / 2.0f;
+        distance += _distanceOffset;
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position + Vector3.forward * distance, 0.2f);
 
         float targetXPos = Mathf.Clamp(transform.position.x + _currentWanderX, -_xRange, _xRange);
         Vector3 targetHorPos = new(targetXPos, 1, transform.position.z + 5);
