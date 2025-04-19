@@ -102,8 +102,8 @@ MonoBehaviour:
   _airDrag: 0.1
   _airAngularDrag: 0.05
   _buoyancyStrength: 30
-  _buoyancyDamping: 0.05
-  _waterLevelOffset: 0.6
+  _buoyancyDamping: 0.5
+  _waterLevelOffset: 0.85
   _maxDepth: 2
 --- !u!114 &5714927482849444143
 MonoBehaviour:

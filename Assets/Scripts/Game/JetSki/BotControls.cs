@@ -63,7 +63,6 @@ public class BotControls : MonoBehaviour, IJetSkiControls
             _currentWanderTime = _wanderDuration.GetRandomValue();
             int wanderDirection = UnityEngine.Random.Range(0, 2) == 0 ? -1 : 1;
             _targetWanderOffset = _wanderAmplitude.GetRandomValue() * wanderDirection;
-            Debug.Log($"Wander started: {_targetWanderOffset}");
         }
         else if (_wanderStarted)
         {

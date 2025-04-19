@@ -443,13 +443,13 @@ MonoBehaviour:
   _waterBlock: {fileID: 2003375264371625618}
   _trampolinePrefab: {fileID: 3560117064485917261, guid: 7e5004811f75a25429c0620feb6c546f, type: 3}
   _trampolineParent: {fileID: 4764924613044791757}
-  _trampolineY: 0.5
+  _trampolineY: 0.6
   _trampolineAngle:
-    Value: -20
-    Variation: 10
+    Value: -14
+    Variation: 4
   _trampolineDistance:
-    Value: 50
-    Variation: 10
+    Value: 70
+    Variation: 15
   _trampolineXRange: 6
 --- !u!1 &8316135803902683307
 GameObject:
