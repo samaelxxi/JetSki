@@ -7,7 +7,7 @@ public class JetSkiController : MonoBehaviour
     [SerializeField] BuoyancyObject _buoyancy;
 
 
-    public Vector3 Velocity => _rigidbody.linearVelocity;
+    public float Velocity => _currentSpeed;
     public JetSkiStats JetSkiStats => _jetSkiStats;
     public Rigidbody Rigidbody => _rigidbody;
 
@@ -54,8 +54,7 @@ public class JetSkiController : MonoBehaviour
             return;
 
         float verticalInput = _controls.GetVerticalInput();
-
-        float speedLerpFactor = (verticalInput + 1f) * 0.5f;
+        float speedLerpFactor = (verticalInput + 1f) * 0.5f;  // Normalize input from [-1, 1] to [0, 1]
         float targetSpeed = Mathf.Lerp(_jetSkiStats.MinSpeed, _jetSkiStats.MaxSpeed, speedLerpFactor);
 
         if (Vector3.Dot(Consts.CorridorForward, transform.forward.SetY(0)) > 0)

@@ -99,9 +99,19 @@ MonoBehaviour:
   _xRange: 4
   _verticalCorrectionTime: 5
   _verticalSmoothing: 0.1
-  _horizontalSmoothing: 0.1
+  _horizontalSmoothing: 0
   _player: {fileID: 0}
   _bot: {fileID: 1152515561267785764}
+  _wanderWaitTime:
+    Value: 0.6
+    Variation: 0.3
+  _wanderDuration:
+    Value: 1.5
+    Variation: 0.5
+  _wanderAmplitude:
+    Value: 25
+    Variation: 7.5
+  _wanderSmoothTime: 0.25
 --- !u!114 &2221620558278503086
 MonoBehaviour:
   m_ObjectHideFlags: 0
