@@ -73,7 +73,7 @@ Material:
     - Vector1_17E53C12: 0.62
     - Vector1_244B0600: 1.2
     - Vector1_34CF798A: 1.75
-    - Vector1_36E8227: 0.1
+    - Vector1_36E8227: 0.6
     - Vector1_3D886DA1: 0.05
     - Vector1_46E42935: 0.25
     - Vector1_47683D42: 0.875
@@ -107,7 +107,7 @@ Material:
     - _Surface: 0
     - _WaveFrequency: 0.4
     - _WaveScale: 0.2
-    - _WaveSpeed: 1.5
+    - _WaveSpeed: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
