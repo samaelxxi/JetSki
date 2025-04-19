@@ -10,6 +10,7 @@ public class MapGenerator : MonoBehaviour
 
     [SerializeField, Space] WaterBlock _waterBlock;
     [SerializeField] GameObject[] _startWalls;
+    [SerializeField] Transform _floor;
 
     [SerializeField, Header("Trampolines")] GameObject _trampolinePrefab;
     [SerializeField] Transform _trampolineParent;
@@ -47,6 +48,9 @@ public class MapGenerator : MonoBehaviour
         UpdateTrampolines();
         UpdateWater();
         UpdateWalls();
+
+        // whatever just move it along the player, needed only for water depth
+        _floor.position = new Vector3(_floor.position.x, _floor.position.y, _player.transform.position.z);
     }
 
     void UpdateTrampolines()

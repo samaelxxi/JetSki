@@ -196,6 +196,7 @@ MonoBehaviour:
   _startWalls:
   - {fileID: 4617652980952478378}
   - {fileID: 6735732424269960306}
+  _floor: {fileID: 7227972910151057695}
   _trampolinePrefab: {fileID: 3560117064485917261, guid: 7e5004811f75a25429c0620feb6c546f, type: 3}
   _trampolineParent: {fileID: 4764924613044791757}
   _trampolineY: 0.7

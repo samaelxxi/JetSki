@@ -20,7 +20,8 @@ public class GameLevel : MonoBehaviour, Services.IRegistrable
         var waterBlock = _mapGenerator.WaterBlocks.FirstOrDefault(w => w.IsPlayerOnBlock(playerZ));
         if (waterBlock == null)
         {
-            Debug.LogError($"No water block found for player at Z: {playerZ}");
+            // can happen if bots are too far away from the player
+            Debug.LogWarning($"No water block found for player at Z: {playerZ}");
             return null;
         }
         return waterBlock;
