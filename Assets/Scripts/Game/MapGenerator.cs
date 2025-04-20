@@ -21,7 +21,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField, Range(0, 1)] float _trampolineCoinChance = 0.5f;
     [SerializeField, Range(0, 1)] float _additionalCoinChance = 0.3f;
     [SerializeField, Range(0, 1)] float _trampolineadditionalCoinChance = 0.6f;
-    [SerializeField, Range(0, 1)] float _trampolineCoinsDist = 3f;
+    [SerializeField] float _trampolineCoinsDist = 3f;
 
     [SerializeField] int _maxCoinsInARow = 4;
     [SerializeField, Min(0.01f)] float _meanCoinPerCell = 0.1f;

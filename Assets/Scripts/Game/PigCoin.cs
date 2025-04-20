@@ -45,9 +45,9 @@ public class PigCoin : MonoBehaviour
         // _isSpawned = false;
         // gameObject.SetActive(false);
         Sequence seq = DOTween.Sequence();
-        seq.Append(transform.DOPunchScale(Vector3.one * 1.1f, 0.4f, vibrato: 4, elasticity: 0.4f)
-            .SetEase(Ease.OutQuad));
-        seq.Append(transform.DOScale(Vector3.zero, 0.3f)
+        seq.Append(transform.DOPunchScale(Vector3.one * 1.1f, 0.3f, vibrato: 4, elasticity: 0.4f)
+            .SetEase(Ease.InQuad));
+        seq.Append(transform.DOScale(Vector3.zero, 0.2f)
             .SetEase(Ease.InBack));
 
         seq.OnComplete(() =>
