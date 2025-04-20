@@ -111,7 +111,7 @@ namespace Bitgem.VFX.StylisedWater
             // TODO : could be reworked to cater for gaps
             for (var y = MAX_TILES_Y - 1; y >= 0; y--)
             {
-                if (tiles[x, y, z])
+                if (tiles != null && tiles[x, y, z])
                 {
                     return transform.position.y + y * TileSize;
                 }
