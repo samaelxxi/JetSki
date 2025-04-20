@@ -122,7 +122,6 @@ public class MapGenerator : MonoBehaviour
     {
         foreach (var wallPair in _walls)
         {
-            Debug.Log(wallPair[0].transform.position.z + _wallLength / 2.0f);
             if (wallPair[0].transform.position.z + _wallLength / 2.0f < _player.transform.position.z - _despawnSafeZone)
                 return wallPair;
         }

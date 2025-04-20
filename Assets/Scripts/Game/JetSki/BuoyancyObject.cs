@@ -16,7 +16,7 @@ public class BuoyancyObject : MonoBehaviour
     [SerializeField] float _waterLevelOffset = 0f;
     [SerializeField] float _maxDepth = 2f;
 
-    public bool IsUnderWater() => _isUnderWater;
+    public bool IsUnderWater => _isUnderWater;
 
     Rigidbody _rigidbody;
     bool _isUnderWater;

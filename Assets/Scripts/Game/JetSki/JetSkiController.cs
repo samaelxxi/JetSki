@@ -7,6 +7,7 @@ public class JetSkiController : MonoBehaviour
     [SerializeField] BuoyancyObject _buoyancy;
 
 
+    public bool IsUnderWater => _buoyancy.IsUnderWater;
     public float Velocity => _currentSpeed;
     public JetSkiStats JetSkiStats => _jetSkiStats;
     public Rigidbody Rigidbody => _rigidbody;
@@ -50,7 +51,7 @@ public class JetSkiController : MonoBehaviour
 
     void MoveForward()
     {
-        if (!_buoyancy.IsUnderWater())
+        if (!_buoyancy.IsUnderWater)
             return;
 
         float verticalInput = _controls.GetVerticalInput();
@@ -75,14 +76,6 @@ public class JetSkiController : MonoBehaviour
         {
             _rigidbody.AddRelativeTorque(Vector3.up * horizontalInput * _jetSkiStats.TurnTorque, ForceMode.Force);
         }
-        // else
-        // {
-        //     // Optional: apply damping when no input
-        //     Vector3 localAngularVelocity = transform.InverseTransformDirection(_rigidbody.angularVelocity);
-        //     localAngularVelocity.y *= 0.9f; // dampen yaw rotation
-
-        //     _rigidbody.angularVelocity = transform.TransformDirection(localAngularVelocity);
-        // }
     }
 
     bool ShouldApplyTurnInput(float horizontalInput)
@@ -113,18 +106,26 @@ public class JetSkiController : MonoBehaviour
 
     void CorrectPitch()
     {
-        if (!_buoyancy.IsUnderWater())
+        if (!_buoyancy.IsUnderWater)
             return;
 
         float pitch = transform.localEulerAngles.x.NormalizeAngle();
         float pitchError = pitch;
 
-        // Smooth correction: stronger force for larger errors, weaker near flat
         float correctionStrength = Mathf.InverseLerp(0f, 30f, Mathf.Abs(pitchError)); // tweak 30f as needed
         correctionStrength = Mathf.SmoothStep(0f, 1f, correctionStrength); // makes it soft near zero
 
-        // Apply torque to reduce pitch
         Vector3 flattenTorque = new Vector3(-Mathf.Sign(pitchError), 0f, 0f) * correctionStrength * 30;
         _rigidbody.AddRelativeTorque(flattenTorque, ForceMode.Acceleration);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (_buoyancy.IsUnderWater)
+            Gizmos.color = Color.green;
+        else
+            Gizmos.color = Color.red;   
+
+        Gizmos.DrawWireSphere(transform.position + Vector3.up * 2, 0.5f);
     }
 }
