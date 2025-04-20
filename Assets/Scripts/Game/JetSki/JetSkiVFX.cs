@@ -34,11 +34,8 @@ public class JetSkiVFX : MonoBehaviour
             {
                 float fallMagn = _jetSkiController.Rigidbody.linearVelocity.magnitude;
 
-                Debug.Log($"Fall Direction: {fallDir}, Fall Speed: {fallMagn}, pos {_jetSkiController.transform.position}");
-
                 int splashCount = (int)MathExtensions.LinearMap(fallMagn, _splashMagnitudeRange.Min, _splashMagnitudeRange.Max, 
                                                                            _splashCountRange.Min, _splashCountRange.Max);
-                Debug.Log($"Splash Count: {splashCount}");
                 foreach (var splash in _sideSplashes)
                 {
                     // var main = splash.main;

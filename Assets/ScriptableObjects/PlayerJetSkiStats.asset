@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d4478c8fe38ee4b8c2a4ea9d201890, type: 3}
   m_Name: PlayerJetSkiStats
   m_EditorClassIdentifier: 
-  <MaxSpeed>k__BackingField: 45
-  <MinSpeed>k__BackingField: 10
+  <MaxSpeed>k__BackingField: 10
+  <MinSpeed>k__BackingField: 2
   <Acceleration>k__BackingField: 10
   <Deceleration>k__BackingField: 20
-  <TurnTorque>k__BackingField: 80
+  <TurnTorque>k__BackingField: 120
   <MaxTurnAngle>k__BackingField: 35
   <MaxLeanAngle>k__BackingField: 30
   <LeanSpeed>k__BackingField: 5

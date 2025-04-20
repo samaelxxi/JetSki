@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,21 @@ public class MapGenerator : MonoBehaviour
     [SerializeField, Space] WaterBlock _waterBlock;
     [SerializeField] GameObject[] _startWalls;
     [SerializeField] Transform _floor;
+
+    [SerializeField, Header("CCCCoins")] PigCoin _coinPrefab;
+    [SerializeField] float _coinRotationSpeed = 60f;
+    [SerializeField] float _waterCoinY = 2.5f;
+    [SerializeField] float _coinXRange = 4f;
+
+    [SerializeField, Range(0, 1)] float _trampolineCoinChance = 0.5f;
+    [SerializeField, Range(0, 1)] float _additionalCoinChance = 0.3f;
+    [SerializeField, Range(0, 1)] float _trampolineadditionalCoinChance = 0.6f;
+    [SerializeField, Range(0, 1)] float _trampolineCoinsDist = 3f;
+
+    [SerializeField] int _maxCoinsInARow = 4;
+    [SerializeField, Min(0.01f)] float _meanCoinPerCell = 0.1f;
+    [SerializeField] int _coinCellSize = 10;
+
 
     [SerializeField, Header("Trampolines")] GameObject _trampolinePrefab;
     [SerializeField] Transform _trampolineParent;
@@ -27,10 +43,15 @@ public class MapGenerator : MonoBehaviour
     List<GameObject> _trampolines = new();
     List<WaterBlock> _waterBlocks = new();
     List<GameObject[]> _walls = new();
+    List<PigCoin> _coins = new();
+    Transform _coinsParent;
     float _lastTrampolineZ = 0;
     float _lastWaterBlockEndZ = 0;
     float _lastWallZ = 0;
     float _wallLength = 0;
+    float _lastCoinZ = 0;
+    int _noCoinsCells = 0;
+
 
     void Awake()
     {
@@ -39,8 +60,11 @@ public class MapGenerator : MonoBehaviour
         _wallLength = _startWalls[0].transform.localScale.z;
         _lastWallZ = _startWalls[0].transform.position.z;
         _walls.Add(new GameObject[2] { _startWalls[0], _startWalls[1] });
+        _coinsParent = new GameObject("Coins").transform;
+        _coinsParent.SetParent(transform);
 
         UpdateMap();
+        StartCoroutine(CoinsRotation());
     }
 
     public void UpdateMap()
@@ -48,8 +72,9 @@ public class MapGenerator : MonoBehaviour
         UpdateTrampolines();
         UpdateWater();
         UpdateWalls();
+        UpdateCoins();
 
-        // whatever just move it along the player, needed only for water depth
+        // whatever, just move it along the player, needed only for water depth
         _floor.position = new Vector3(_floor.position.x, _floor.position.y, _player.transform.position.z);
     }
 
@@ -63,6 +88,9 @@ public class MapGenerator : MonoBehaviour
             GameObject trampoline = GetFreeTrampoline();
             trampoline.transform.SetPositionAndRotation(trampolinePos, trampolineRotation);
             _lastTrampolineZ = trampolineZ;
+
+            if (Random.value < _trampolineCoinChance)
+                AddTrampolineCoins(trampolinePos);
         }
     }
 
@@ -76,6 +104,21 @@ public class MapGenerator : MonoBehaviour
         GameObject newTrampoline = Instantiate(_trampolinePrefab, Vector3.zero, Quaternion.identity, _trampolineParent);
         _trampolines.Add(newTrampoline);
         return newTrampoline;
+    }
+
+    void AddTrampolineCoins(Vector3 trampolinePos)
+    {
+        int coins = 1;
+        while (coins < _maxCoinsInARow && Random.value < _trampolineadditionalCoinChance)
+            coins++;
+
+        Vector3 startPos = trampolinePos + new Vector3(0, 3, 5);
+        for (int i = 0; i < coins; i++)
+        {
+            PigCoin coin = GetFreeCoin();
+            coin.Spawn();
+            coin.transform.position = startPos + new Vector3(0, 0, i * _trampolineCoinsDist);
+        }
     }
 
     void UpdateWater()
@@ -101,7 +144,7 @@ public class MapGenerator : MonoBehaviour
         return newWaterBlock;
     }
 
-    public void UpdateWalls()
+    void UpdateWalls()
     {
         while (_lastWallZ < LastVisiblePoint)
         {
@@ -130,5 +173,64 @@ public class MapGenerator : MonoBehaviour
         newWalls[1] = Instantiate(_startWalls[0], Vector3.zero, Quaternion.identity, _startWalls[0].transform.parent);
         _walls.Add(newWalls);
         return newWalls;
+    }
+
+    void UpdateCoins()
+    {
+        while (_lastCoinZ < LastVisiblePoint)
+        {
+            _lastCoinZ += _coinCellSize;
+            int coinsToSpawn = HowManyCoinsShouldAddAtCurrentZ();
+            for (int i = 0; i < coinsToSpawn; i++)
+            {
+                Vector3 coinPos = new(Random.Range(-_trampolineXRange, _trampolineXRange), _waterCoinY, _lastCoinZ);
+                PigCoin coin = GetFreeCoin();
+                coin.Spawn();
+                coin.transform.position = coinPos;
+            }
+        }
+    }
+
+    int HowManyCoinsShouldAddAtCurrentZ()
+    {
+        float chance = Random.value;
+        float lambda = 1.0f / _meanCoinPerCell;
+        float currentChance = 1f - Mathf.Exp(-_noCoinsCells / lambda);
+        if (chance < currentChance)
+        {
+            _noCoinsCells = 0;
+            int coins = 1;
+            while (coins < _maxCoinsInARow && Random.value < _additionalCoinChance)
+                coins++;
+
+            return coins;
+        }
+        else
+        {
+            _noCoinsCells++;
+            return 0;
+        }
+    }
+
+    PigCoin GetFreeCoin()
+    {
+        foreach (var coin in _coins)
+            if (!coin.IsSpawned || coin.transform.position.z < _player.transform.position.z - _despawnSafeZone)
+                return coin;
+
+        PigCoin newCoin = Instantiate(_coinPrefab, Vector3.zero, Quaternion.identity, _coinsParent.transform);
+        _coins.Add(newCoin);
+        return newCoin;
+    }
+
+    IEnumerator CoinsRotation()
+    {
+        while (true)
+        {
+            foreach (var coin in _coins)
+                coin.transform.rotation = Quaternion.Euler(0, Time.time * _coinRotationSpeed, 0);
+
+            yield return null;
+        }
     }
 }
