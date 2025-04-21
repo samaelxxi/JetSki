@@ -716,8 +716,8 @@
     "m_ObjectId": "28f7a51f99a844adb066067442db241c",
     "m_Title": "Random sprite index",
     "m_Position": {
-        "x": -1967.2003173828125,
-        "y": 311.99993896484377
+        "x": -1967.2001953125,
+        "y": 312.0000305175781
     }
 }
 
@@ -1744,7 +1744,7 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": 0.0,
-    "m_FloatType": 0,
+    "m_FloatType": 1,
     "m_RangeValues": {
         "x": 0.0,
         "y": 1.0
@@ -1910,7 +1910,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "9afccd7715ac4952a387fd1575bb5f9b",
     "m_Id": 0,
-    "m_DisplayName": "SplashesD",
+    "m_DisplayName": "SplashesTexture",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -2301,10 +2301,10 @@
     "m_Guid": {
         "m_GuidSerialized": "faf70515-eb61-4311-a121-46e1cb8181ea"
     },
-    "m_Name": "SplashesD",
+    "m_Name": "SplashesTexture",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "SplashesD",
-    "m_DefaultReferenceName": "_SplashesD",
+    "m_RefNameGeneratedByDisplayName": "SplashesTexture",
+    "m_DefaultReferenceName": "_SplashesTexture",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,

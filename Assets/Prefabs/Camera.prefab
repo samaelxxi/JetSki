@@ -92,7 +92,7 @@ MonoBehaviour:
   TargetOffset: {x: 0, y: 4, z: -8}
   TrackerSettings:
     BindingMode: 4
-    PositionDamping: {x: 1, y: 1, z: 1}
+    PositionDamping: {x: 3, y: 1, z: 1}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
@@ -155,8 +155,8 @@ MonoBehaviour:
   constraintX: 1
   constraintY: 1
   constraintZ: 0
-  positionA: {x: 0, y: 6, z: 0}
-  positionB: {x: 0, y: 6, z: 0}
+  positionA: {x: -2, y: 6, z: 0}
+  positionB: {x: 2, y: 6, z: 0}
 --- !u!1 &3374762245485527642
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +308,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 0
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
