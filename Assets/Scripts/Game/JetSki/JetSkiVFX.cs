@@ -37,14 +37,9 @@ public class JetSkiVFX : MonoBehaviour
                 int splashCount = (int)MathExtensions.LinearMap(fallMagn, _splashMagnitudeRange.Min, _splashMagnitudeRange.Max, 
                                                                            _splashCountRange.Min, _splashCountRange.Max);
                 foreach (var splash in _sideSplashes)
-                {
-                    // var main = splash.main;
-                    // main.startLifetime = splashCount * 0.1f;
                     splash.Emit(splashCount);
-                }
             }
         }
-
 
         _prevUnderWater = _isUnderWater;
     }

@@ -20,7 +20,6 @@ public class BuoyancyObject : MonoBehaviour
 
     Rigidbody _rigidbody;
     bool _isUnderWater;
-
     WaterBlock _currentWaterBlock;
 
     void Awake()
@@ -36,41 +35,23 @@ public class BuoyancyObject : MonoBehaviour
     void ApplyBuoyancy()
     {
         float waterHeight = GetWaterHeight();
-        // Debug.Log($"Water Height: {waterHeight}");
         float depth = waterHeight - _buoyancyPoint.position.y;
 
         if (depth > 0f)
         {
-
             float springForce = Mathf.Clamp(depth, 0, _maxDepth) * _buoyancyStrength;
             Vector3 pointVelocity = _rigidbody.GetPointVelocity(_buoyancyPoint.position);
-
-
-            // float waveBounce = Mathf.Sin(Time.time * bounceSpeed + offset) * bounceAmplitude;
-            // float totalForce = springForce + damping + waveBounce;
 
             float dampingForce = -pointVelocity.y * _buoyancyDamping;
             float totalForce = springForce + dampingForce;
             totalForce *= _rigidbody.mass;
 
             _rigidbody.AddForce(Vector3.up * totalForce, ForceMode.Force);
-
-            // // --- OPTIONAL DAMPING ---
-            // if (_buoyancyDamping > 0.001f)
-            // {
-            //     float dampingForce = -pointVelocity.y * _buoyancyDamping * _rigidbody.mass;
-            //     _rigidbody.AddForceAtPosition(Vector3.up * dampingForce, point.position, ForceMode.Force);
-            // }
-
-            // Debug.DrawRay(point.position, Vector3.up * buoyancyForce * 0.1f, Color.cyan);
         }
 
         bool newUnderWaterState = depth > 0f;
-
         if (newUnderWaterState != _isUnderWater)
-        {
             UpdateDragState(newUnderWaterState);
-        }
     }
 
     float GetWaterHeight()

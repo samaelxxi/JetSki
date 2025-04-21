@@ -42,8 +42,6 @@ public class PlayerControls : MonoBehaviour, IJetSkiControls
             _moveInput.x = Mathf.SmoothDamp(_moveInput.x, input.x, ref _xSmoothVelocity, _horizontalSmoothing);
             _moveInput.y = Mathf.SmoothDamp(_moveInput.y, input.y, ref _ySmoothVelocity, _verticalSmoothing);
         }
-
-        // Debug.Log(_moveInput);
     }
 
     public float GetHorizontalInput()

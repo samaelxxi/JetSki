@@ -38,12 +38,14 @@ public class BotControls : MonoBehaviour, IJetSkiControls
     public void Update()
     {
         float playerVelocity = _player.Velocity;
+        // distance is used to determine the target speed
         float distance = _player.transform.position.z - transform.position.z;
         distance += playerVelocity / 2.0f; // try(hope) to be in front of the player
         distance += _distanceOffset;
         float targetSpeed = playerVelocity + distance / _verticalCorrectionTime;
         targetSpeed = Mathf.Clamp(targetSpeed, _bot.JetSkiStats.MinSpeed, _bot.JetSkiStats.MaxSpeed);
-        float targetVerticalInput = MathExtensions.LinearMap(targetSpeed, _bot.JetSkiStats.MinSpeed, _bot.JetSkiStats.MaxSpeed, -1f, 1f);
+        float targetVerticalInput = MathExtensions.LinearMap(targetSpeed, 
+                                    _bot.JetSkiStats.MinSpeed, _bot.JetSkiStats.MaxSpeed, -1f, 1f);
         _moveInput.y = Mathf.SmoothDamp(_moveInput.y, targetVerticalInput, ref _ySmoothVelocity, _verticalSmoothing);
 
         ProcessWandering();
@@ -53,7 +55,8 @@ public class BotControls : MonoBehaviour, IJetSkiControls
         Vector3 targetHorPos = new(targetXPos, transform.position.y, transform.position.z + _bot.Velocity);
         float targetYawAngle = Quaternion.LookRotation(targetHorPos - transform.position).eulerAngles.y;
         float angleDiff = Mathf.DeltaAngle(currentYawAngle, targetYawAngle);
-        float targetHorizontalInput = MathExtensions.LinearMap(angleDiff, -_bot.JetSkiStats.MaxTurnAngle, _bot.JetSkiStats.MaxTurnAngle, -1f, 1f);
+        float targetHorizontalInput = MathExtensions.LinearMap(angleDiff, 
+                                      -_bot.JetSkiStats.MaxTurnAngle, _bot.JetSkiStats.MaxTurnAngle, -1f, 1f);
         _moveInput.x = Mathf.SmoothDamp(_moveInput.x, targetHorizontalInput, ref _xSmoothVelocity, _horizontalSmoothing);
     }
 

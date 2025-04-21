@@ -3,6 +3,7 @@ using DG.Tweening;
 
 public class PigCoin : MonoBehaviour
 {
+    // could add some UI and count coins per player but eh
     [SerializeField] LayerMask _interactionLayerMask;
 
     public bool IsSpawned => _isSpawned;
