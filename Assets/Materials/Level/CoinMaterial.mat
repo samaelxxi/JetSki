@@ -13,6 +13,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ENVIRONMENTREFLECTIONS_OFF
+  - _RECEIVE_SHADOWS_OFF
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -111,7 +112,7 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
-    - _Cutoff: 0.5
+    - _Cutoff: 0
     - _DetailAlbedoMapScale: 0
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -124,7 +125,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
-    - _ReceiveShadows: 1
+    - _ReceiveShadows: 0
     - _Shininess: 0.078125
     - _Smoothness: 0.293
     - _SmoothnessTextureChannel: 0
@@ -136,9 +137,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.31199998, b: 0.9885332, a: 1}
-    - _Color: {r: 1, g: 0.31199995, b: 0.9885332, a: 1}
-    - _EmissionColor: {r: 0.092, g: 0.092, b: 0.092, a: 1}
+    - _BaseColor: {r: 1, g: 0.8913009, b: 0, a: 1}
+    - _Color: {r: 1, g: 0.8913009, b: 0, a: 1}
+    - _EmissionColor: {r: 0.04905659, g: 0.04905659, b: 0.04905659, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}
     - _TreeInstanceScale: {r: 1, g: 1, b: 1, a: 1}

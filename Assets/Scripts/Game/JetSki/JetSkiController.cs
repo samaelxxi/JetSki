@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class JetSkiController : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class JetSkiController : MonoBehaviour
         MoveForward();
         TurnJet();
 
-        CorrectPitch();
+        CorrectPitchAndRoll();
         DumpAngularSpeed();
     }
 
@@ -106,19 +107,31 @@ public class JetSkiController : MonoBehaviour
         _jetMesh.localRotation = Quaternion.Euler(0f, 0f, -_currentRoll);
     }
 
-    void CorrectPitch()
+    void CorrectPitchAndRoll()
     {
         if (!_buoyancy.IsUnderWater)
             return;
 
-        float pitch = transform.localEulerAngles.x.NormalizeAngle();
-        float pitchError = pitch;
+        ApplyFlatteningTorque(Axis.X, 30f, 30f); // Pitch correction
+        ApplyFlatteningTorque(Axis.Z, 30f, 90f); // Roll correction
+    }
 
-        float correctionStrength = Mathf.InverseLerp(0f, 30f, Mathf.Abs(pitchError));
-        correctionStrength = Mathf.SmoothStep(0f, 1f, correctionStrength); // makes it soft near zero
+    void ApplyFlatteningTorque(Axis axis, float maxErrorAngle, float maxTorque)
+    {
+        float angle = axis == Axis.X ? transform.localEulerAngles.x : transform.localEulerAngles.z;
+        float error = angle.NormalizeAngle();
 
-        Vector3 flattenTorque = new Vector3(-Mathf.Sign(pitchError), 0f, 0f) * correctionStrength * 30;
-        _rigidbody.AddRelativeTorque(flattenTorque, ForceMode.Acceleration);
+        float correctionStrength = Mathf.InverseLerp(0f, maxErrorAngle, Mathf.Abs(error));
+        correctionStrength = Mathf.SmoothStep(0f, 1f, correctionStrength);
+
+        Vector3 torque = axis switch
+        {
+            Axis.X => new Vector3(-Mathf.Sign(error), 0f, 0f),
+            Axis.Z => new Vector3(0f, 0f, -Mathf.Sign(error)),
+            _ => Vector3.zero
+        };
+
+        _rigidbody.AddRelativeTorque(correctionStrength * maxTorque * torque, ForceMode.Acceleration);
     }
 
     void OnDrawGizmosSelected()
