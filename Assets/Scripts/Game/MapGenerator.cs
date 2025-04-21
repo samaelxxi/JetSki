@@ -63,7 +63,6 @@ public class MapGenerator : MonoBehaviour
         _coinsParent = new GameObject("Coins").transform;
         _coinsParent.SetParent(transform);
 
-        UpdateMap();
         StartCoroutine(CoinsRotation());
     }
 
@@ -212,7 +211,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    PigCoin GetFreeCoin()
+    PigCoin GetFreeCoin()  // at this point, given that it's fourth similar method, should've made a pooler or something
     {
         foreach (var coin in _coins)
             if (!coin.IsSpawned || coin.transform.position.z < _player.transform.position.z - _despawnSafeZone)

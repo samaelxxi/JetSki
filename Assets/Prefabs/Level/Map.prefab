@@ -204,7 +204,7 @@ MonoBehaviour:
   _trampolineCoinChance: 0.4
   _additionalCoinChance: 0.3
   _trampolineadditionalCoinChance: 0.7
-  _trampolineCoinsDist: 1
+  _trampolineCoinsDist: 3
   _maxCoinsInARow: 6
   _meanCoinPerCell: 0.2
   _coinCellSize: 10

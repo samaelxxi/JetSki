@@ -1,6 +1,6 @@
 using UnityEngine;
 
-interface IJetSkiControls
+public interface IJetSkiControls
 {
     float GetVerticalInput();
     float GetHorizontalInput();

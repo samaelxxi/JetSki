@@ -17,6 +17,6 @@ MonoBehaviour:
   <Acceleration>k__BackingField: 6
   <Deceleration>k__BackingField: 40
   <TurnTorque>k__BackingField: 130
-  <MaxTurnAngle>k__BackingField: 35
+  <MaxTurnAngle>k__BackingField: 30
   <MaxLeanAngle>k__BackingField: 30
   <LeanSpeed>k__BackingField: 5

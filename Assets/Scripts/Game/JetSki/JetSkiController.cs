@@ -5,6 +5,7 @@ public class JetSkiController : MonoBehaviour
     [SerializeField] JetSkiStats _jetSkiStats;
     [SerializeField] Transform _jetMesh;
     [SerializeField] BuoyancyObject _buoyancy;
+    [SerializeField] PilotLeanRig _pilotLeanRig;
 
 
     public bool IsUnderWater => _buoyancy.IsUnderWater;
@@ -23,6 +24,7 @@ public class JetSkiController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.maxAngularVelocity = 10f;
         _controls = GetComponent<IJetSkiControls>();
+        _pilotLeanRig.SetControls(_controls);
     }
 
     void Update()
